@@ -1,8 +1,9 @@
 ﻿using BookStore.Entities.Authors;
+using Volo.Abp.Domain.Repositories;
 
 namespace BookStore.Interfaces.Authors
 {
-    public interface IAuthorRepository
+    public interface IAuthorRepository : IRepository<Author, Guid>
     {
 
         Task<Author> FindByNameAsync(string name);
