@@ -43,6 +43,8 @@ using Volo.Abp.UI.Navigation;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace BookStore;
 
@@ -176,7 +178,7 @@ public class BookStoreModule : AbpModule
         Configure<AbpLocalizationOptions>(options =>
         {
             options.Resources
-                .Add<BookStoreResource>("en")
+                .Add<BookStoreResource>("en-AU")
                 .AddBaseTypes(typeof(AbpValidationResource))
                 .AddVirtualJson("/Localization/BookStore");
 
@@ -186,6 +188,7 @@ public class BookStoreModule : AbpModule
             options.Languages.Add(new LanguageInfo("tr", "tr", "Türkçe"));
             options.Languages.Add(new LanguageInfo("ar", "ar", "العربية"));
             options.Languages.Add(new LanguageInfo("cs", "cs", "Čeština"));
+            options.Languages.Add(new LanguageInfo("en-AU", "en-AU", "English (AU)"));
             options.Languages.Add(new LanguageInfo("en-GB", "en-GB", "English (UK)"));
             options.Languages.Add(new LanguageInfo("hu", "hu", "Magyar"));
             options.Languages.Add(new LanguageInfo("fi", "fi", "Finnish"));
@@ -323,5 +326,22 @@ public class BookStoreModule : AbpModule
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();
+
+        var supportedCultures = new[]
+{
+        new CultureInfo("en-AU")
+        };
+
+        app.UseAbpRequestLocalization(options =>
+        {
+            options.DefaultRequestCulture = new RequestCulture("en-AU");
+            options.SupportedCultures = supportedCultures;
+            options.SupportedUICultures = supportedCultures;
+            options.RequestCultureProviders = new List<IRequestCultureProvider>
+            {
+                new QueryStringRequestCultureProvider(),
+                new CookieRequestCultureProvider()
+            };
+        });
     }
 }
