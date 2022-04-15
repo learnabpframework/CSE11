@@ -1,4 +1,5 @@
 ﻿using BookStore.Localization;
+using BookStore.Premissions;
 using Volo.Abp.Identity.Web.Navigation;
 using Volo.Abp.SettingManagement.Web.Navigation;
 using Volo.Abp.TenantManagement.Web.Navigation;
@@ -16,7 +17,7 @@ public class BookStoreMenuContributor : IMenuContributor
         }
     }
 
-    private Task ConfigureMainMenuAsync(MenuConfigurationContext context)
+    private async Task ConfigureMainMenuAsync(MenuConfigurationContext context)
     {
         var administration = context.Menu.GetAdministration();
         var l = context.GetLocalizer<BookStoreResource>();
@@ -32,6 +33,23 @@ public class BookStoreMenuContributor : IMenuContributor
             )
         );
 
+        var bookStoreMenu = new ApplicationMenuItem(
+            "BooksStore",
+            l["Menu:BookStore"],
+            icon: "fa fa-book"
+        );
+
+        context.Menu.AddItem(bookStoreMenu);
+
+        if (await context.IsGrantedAsync(BookStorePermissions.Authors.Default))
+        {
+            bookStoreMenu.AddItem(new ApplicationMenuItem(
+                "BooksStore.Authors",
+                l["Menu:Authors"],
+                url: "/Authors"
+            ));
+        }
+
         if (BookStoreModule.IsMultiTenant)
         {
             administration.SetSubItemOrder(TenantManagementMenuNames.GroupName, 1);
@@ -41,6 +59,6 @@ public class BookStoreMenuContributor : IMenuContributor
             administration.TryRemoveMenuItem(TenantManagementMenuNames.GroupName);
         }
 
-        return Task.CompletedTask;
+        //return Task.CompletedTask;
     }
 }
