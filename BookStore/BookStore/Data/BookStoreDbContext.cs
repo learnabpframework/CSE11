@@ -1,5 +1,6 @@
 ﻿using BookStore.Constants;
 using BookStore.Entities.Authors;
+using BookStore.Entities.Books;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -15,6 +16,8 @@ namespace BookStore.Data;
 
 public class BookStoreDbContext : AbpDbContext<BookStoreDbContext>
 {
+
+    public DbSet<Book> Books { get; set; }
 
     public DbSet<Author> Authors { get; set; }
 
@@ -52,6 +55,14 @@ public class BookStoreDbContext : AbpDbContext<BookStoreDbContext>
             b.HasIndex(x => x.Name);
         });
 
+        builder.Entity<Book>(b =>
+        {
+            b.ToTable(BookStoreConsts.DbTablePrefix + "Books",
+                BookStoreConsts.DbSchema);
+            b.ConfigureByConvention(); //auto configure for the base class props
+            b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+
+        });
 
     }
 }
