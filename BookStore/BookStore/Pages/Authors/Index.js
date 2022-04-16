@@ -35,7 +35,7 @@
                                         );
                                     },
                                     action: function (data) {
-                                        bookStore.authors.author
+                                        bookStore.services.authors.author
                                             .delete(data.record.id)
                                             .then(function () {
                                                 abp.notify.info(
