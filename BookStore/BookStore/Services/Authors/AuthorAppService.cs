@@ -1,6 +1,6 @@
 ﻿using BookStore.Entities.Authors;
 using BookStore.Interfaces.Authors;
-using BookStore.Premissions;
+using BookStore.Permissions;
 using BookStore.Services.Dtos.Authors;
 using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;

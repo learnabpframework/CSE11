@@ -2,7 +2,7 @@
 using Volo.Abp.Localization;
 using Volo.Abp.Authorization.Permissions;
 
-namespace BookStore.Premissions
+namespace BookStore.Permissions
 {
     public class BookStorePermissionDefinitionProvider : PermissionDefinitionProvider
     {

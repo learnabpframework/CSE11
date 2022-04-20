@@ -1,5 +1,5 @@
 ﻿using BookStore.Localization;
-using BookStore.Premissions;
+using BookStore.Permissions;
 using Volo.Abp.Identity.Web.Navigation;
 using Volo.Abp.SettingManagement.Web.Navigation;
 using Volo.Abp.TenantManagement.Web.Navigation;
