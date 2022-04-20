@@ -45,6 +45,8 @@ using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using BookStore.Permissions;
 
 namespace BookStore;
 
@@ -129,6 +131,17 @@ public class BookStoreModule : AbpModule
         ConfigureLocalization();
         ConfigureAuthentication(context.Services, configuration);
         ConfigureEfCore(context);
+
+
+        Configure<RazorPagesOptions>(options =>
+        {
+            options.Conventions.AuthorizePage("/Authors/Index", BookStorePermissions.Books.Default);
+            options.Conventions.AuthorizePage("/Authors/CreateModal", BookStorePermissions.Books.Create);
+            options.Conventions.AuthorizePage("/Authors/EditModal", BookStorePermissions.Books.Edit);
+            options.Conventions.AuthorizePage("/Books/Index", BookStorePermissions.Books.Default);
+            options.Conventions.AuthorizePage("/Books/CreateModal", BookStorePermissions.Books.Create);
+            options.Conventions.AuthorizePage("/Books/EditModal", BookStorePermissions.Books.Edit);
+        });
     }
 
     private void ConfigureMultiTenancy()

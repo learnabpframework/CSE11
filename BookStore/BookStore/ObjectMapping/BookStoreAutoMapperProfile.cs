@@ -17,6 +17,10 @@ public class BookStoreAutoMapperProfile : Profile
 
         CreateMap<Author, AuthorDto>();
 
+        CreateMap<Pages.Books.CreateModalModel.CreateBookViewModel, CreateUpdateBookDto>();
+        CreateMap<BookDto, Pages.Books.EditModalModel.EditBookViewModel>();
+        CreateMap<Pages.Books.EditModalModel.EditBookViewModel, CreateUpdateBookDto>();
+
         CreateMap<Pages.Authors.CreateModalModel.CreateAuthorViewModel, CreateAuthorDto>();
         CreateMap<AuthorDto, Pages.Authors.EditModalModel.EditAuthorViewModel>();
         CreateMap<Pages.Authors.EditModalModel.EditAuthorViewModel, UpdateAuthorDto>();
