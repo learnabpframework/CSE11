@@ -30,12 +30,11 @@ namespace BookStore
                 return;
             }
 
-
             var orwell = await _authorRepository.InsertAsync(
-            await _authorManager.CreateAsync(
-                "George Orwell",
-                new DateTime(1903, 06, 25),
-                "Orwell produced literary criticism and poetry, fiction and polemical journalism; and is best known for the allegorical novella Animal Farm (1945) and the dystopian novel Nineteen Eighty-Four (1949)."
+                await _authorManager.CreateAsync(
+                    "George Orwell",
+                    new DateTime(1903, 06, 25),
+                    "Orwell produced literary criticism and poetry, fiction and polemical journalism; and is best known for the allegorical novella Animal Farm (1945) and the dystopian novel Nineteen Eighty-Four (1949)."
                 )
             );
 
@@ -47,10 +46,10 @@ namespace BookStore
                 )
             );
 
-
             await _bookRepository.InsertAsync(
                 new Book
                 {
+                    AuthorId = orwell.Id, // SET THE AUTHOR
                     Name = "1984",
                     Type = BookType.Dystopia,
                     PublishDate = new DateTime(1949, 6, 8),
@@ -62,6 +61,7 @@ namespace BookStore
             await _bookRepository.InsertAsync(
                 new Book
                 {
+                    AuthorId = douglas.Id, // SET THE AUTHOR
                     Name = "The Hitchhiker's Guide to the Galaxy",
                     Type = BookType.ScienceFiction,
                     PublishDate = new DateTime(1995, 9, 27),

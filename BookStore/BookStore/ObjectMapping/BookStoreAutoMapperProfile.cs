@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookStore.Entities.Authors;
 using BookStore.Entities.Books;
+using BookStore.Services.Authors;
 using BookStore.Services.Dtos.Authors;
 using BookStore.Services.Dtos.Books;
 
@@ -16,6 +17,7 @@ public class BookStoreAutoMapperProfile : Profile
         CreateMap<BookDto, CreateUpdateBookDto>();
 
         CreateMap<Author, AuthorDto>();
+        CreateMap<Author, AuthorLookupDto>();
 
         CreateMap<Pages.Books.CreateModalModel.CreateBookViewModel, CreateUpdateBookDto>();
         CreateMap<BookDto, Pages.Books.EditModalModel.EditBookViewModel>();

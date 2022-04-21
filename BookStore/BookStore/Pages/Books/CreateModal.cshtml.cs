@@ -4,7 +4,9 @@ using BookStore.Services.Dtos.Books;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 using Volo.Abp.AspNetCore.Mvc.UI.RazorPages;
 
 namespace BookStore.Pages.Books
@@ -29,6 +31,11 @@ namespace BookStore.Pages.Books
 
             Book = new CreateBookViewModel();
 
+            var authorLookup = await _bookAppService.GetAuthorLookupAsync();
+            Authors = authorLookup.Items
+                .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
+                .ToList();
+
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -41,6 +48,9 @@ namespace BookStore.Pages.Books
 
         public class CreateBookViewModel
         {
+            [SelectItems(nameof(Authors))]
+            [DisplayName("Author")]
+            public Guid AuthorId { get; set; }
 
             [Required]
             [StringLength(128)]

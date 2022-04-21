@@ -6,6 +6,8 @@ namespace BookStore.Services.Dtos.Books
     public class CreateUpdateBookDto
     {
 
+        public Guid AuthorId { get; set; }
+
         [Required]
         [StringLength(128)]
         public string Name { get; set; }
